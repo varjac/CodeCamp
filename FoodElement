@@ -1,0 +1,16 @@
+package codeCamp2014;
+
+public class FoodElement {
+	
+	String foodElement;
+	double cost;
+	
+	public FoodElement(String name, double itemCost){
+		
+		foodElement = name;
+		cost = itemCost;
+	}
+	
+
+}
+
