@@ -1,6 +1,14 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 
 public class Food implements IJob{
+
 	private String[] order;
+	PrintWriter out;
+	Socket clientSocket;
 	
 	public void Start() {
 		order = new String[3];
@@ -20,26 +28,40 @@ public class Food implements IJob{
 		}
 	}
 	
-	public boolean sendItem(){
-		return SendToHost(order);
-	}
-	
 	@Override
 	public boolean Sync() {
-		return false;
+		
+		try {
+			clientSocket = new Socket("Food", 4444);
+			 out = new PrintWriter(clientSocket.getOutputStream(), true);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+			//Hail Hydra
+			return true;
+		
 	}
 
 	@Override
-	public boolean SendToHost(String[] orderItem) {	
-		
-		
-		
-		//bluetooth send item
-		System.out.println(orderItem);
-		
-		if(true)//host receives String[]
-			return true;
-		return false;
+	public boolean SendToHost() {
+		Sync();
+		//Ideally this would be done in an app on a phone or tablet
+		//connected through Bluetooth.
+		System.out.println(order);
+		out.print(order);
+		out.flush();
+		out.close();
+		try {
+			clientSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 		
 	}
 
