@@ -1,0 +1,48 @@
+package codeCamp2014;
+
+
+public class Def {
+
+	public String bun;
+	public String patty;
+	public String condement;
+	public String drinkSize;
+	public String flavor;
+	
+	public String[] _name = new String[]{"ian", "jared", "jackie","greg"};
+
+	
+	public FoodElement[] _buns = new FoodElement[]{
+		new FoodElement("wheat", 2.09),
+		new FoodElement("white", 3.15),
+		new FoodElement("old", .99),
+		};
+	
+	public FoodElement[] _patty = new FoodElement[]{
+		new FoodElement("single patty", 2.09),
+		new FoodElement("double patty", 3.15),
+		new FoodElement("tofu patty", .99),
+		};
+	
+	public FoodElement[] _condement = new FoodElement[]{
+		new FoodElement("Katchup", 2.09),
+		new FoodElement("mustard", 3.15),
+		new FoodElement("pickles", .99),
+		};
+	
+	public FoodElement[] _drinkSize = new FoodElement[]{
+		new FoodElement("small", 2.09),
+		new FoodElement("med", 3.15),
+		new FoodElement("large", .99),
+		};
+	
+	public FoodElement[] _flavor = new FoodElement[]{
+		new FoodElement("sprite", 2.09),
+		new FoodElement("coke", 3.15),
+		new FoodElement("pepsie", .99),
+		};
+	
+	
+	
+}
+
