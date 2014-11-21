@@ -1,0 +1,93 @@
+package codeCamp2014;
+
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+
+// just changed customer patron to customers.peek()
+
+public class RegisterMain {
+
+	
+	
+	int points = 20;
+	// Customer patron;
+	
+	String order;
+	int numOfInitialCustomers = 20;
+	
+	public ArrayList<Customer> customers = new ArrayList<Customer>();
+	
+	//PriorityQueue<Customer> customers = new PriorityQueue<Customer>();
+	
+	
+	public void Start() {
+		
+		for (int i = 0; i < numOfInitialCustomers; i++){
+			Customer customer = new Customer();
+			customers.add(customer);
+		}
+
+		//		NewCustomer();
+		
+		
+	}
+	
+	public ArrayList<Customer> getCustomers(){
+		
+		return customers;
+	}
+
+	
+	public boolean Sync() {
+		
+		return false;
+	}
+
+	
+	public boolean SendToHost() {
+		
+		return true;
+	}
+
+	public boolean completeFood(String[] food){
+		for(int i = 0; i<customers.get(0).foodOrder.length; i++){
+			if(!food[i].equals(customers.get(0).foodOrder[i].foodElement)){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean completeDrink(String[] drink){
+		for(int i = 0; i<customers.get(0).drinkOrder.length; i++){
+			if(!drink[i].equals(customers.get(0).drinkOrder[i].foodElement)){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+//	public void NewCustomer(){
+//		
+//		
+//		while(points > 0){
+//			
+//			
+//				try{
+//					Customer customer = new Customer();
+//					customers.add(customer);
+//					System.out.print(", "+ customer.name );
+//					Thread.sleep(5000);
+//				}
+//				catch(Exception e){
+//					
+//				}
+//			
+//		}
+//		
+//	}
+	
+	
+
+}
