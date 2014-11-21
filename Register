@@ -1,0 +1,296 @@
+package codeCamp2014;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+
+import java.util.*;
+import javax.swing.JTextArea;
+
+public class Register extends JFrame {
+
+	private JPanel contentPane;
+	private JPanel registerCounter = new RegisterGraphics();
+	private String[] buns = new String [] {"White","Wheat", "Bagel"};
+	private String [] patty = new String [] {"Hamburger","Turkey","Veggie"};
+	private String [] condiments = new String [] {"Ketchup","Mustard","BBQ"};
+	private String [] size = new String [] {"Small","Medium","Large"};
+	private String [] flavor = new String [] {"Sprite","Lemonade","Fruit Punch"};
+
+	private String bunSelelction;
+	private String pattySelection;
+	private String condimentSelection;
+	private String sizeSelection;
+	private String flavorSelection;
+
+	private JComboBox bunType;
+	private JComboBox pattyType;
+	private JComboBox condimentType;
+	private JComboBox sizeType;
+	private JComboBox flavorType;
+
+	private JLabel totalLabel;
+
+	private double orderPrice=0;
+	private String orderText;
+	private double moneyUsedToPay=10.00;
+	
+	private boolean isChangeCorrect=false;
+	private List<Boolean> correctChange = new ArrayList<Boolean>() ;
+	private List<Double> changeValues = new ArrayList<Double>();
+	private boolean [] isChangeCorrectArray = new boolean [3];
+
+	private double correctChangeValue;
+
+	private JButton [] changeButtons = new JButton [3];
+	
+	private static List<Customer> customers = new ArrayList<Customer>();
+	private Customer currentCustomer;
+	//private BufferedImage customer = new BufferedImage [] {"RegisterCounter.png"};
+
+
+	/**
+	 * Launch the application.
+	 */
+	
+	public static void main(String[] args) {
+		RegisterMain main = new RegisterMain();
+		main.Start();
+		
+		customers = main.customers;
+		
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Register frame = new Register();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Create the frame.
+	 */
+	public Register() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		if(!customers.isEmpty()){
+			currentCustomer=customers.get(0);
+			orderText = currentCustomer.CreatePatronDialogue();
+			moneyUsedToPay = currentCustomer.CalculatePatronsWallet();
+		}
+		//int currentCustomerMoney=currentCustomer.getMoney();
+		//String currentCustomerOrder=currentCustomer.getOrder();
+
+		JButton orderButton = new JButton("Place Order");
+		orderButton.setBounds(233, 207, 89, 46);
+		orderButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e)
+			{
+				//Execute when button is pressed
+
+				//Display total and amount used to purchase in the order
+				//text area.
+
+				getOrderPrice();
+				totalLabel.setText(""+orderPrice);
+				correctChangeValue=moneyUsedToPay-orderPrice;
+				changeValues.add(correctChangeValue);
+				correctChange.add(false);
+				correctChange.add(false);
+
+				//Place the correct value inside of the array
+				int arraySpot = (int)Math.floor(Math.random()*3);
+				changeButtons[arraySpot].setText(""+correctChangeValue);
+				isChangeCorrectArray[arraySpot]=true;
+
+
+				double randomChange = Math.ceil((correctChangeValue-2+ Math.random()*4)*100)/100;
+				changeValues.add(randomChange);
+				for(int i=0; i<changeButtons.length; i++){
+					if(changeButtons[i].getText().equals("")){
+						changeButtons[i].setText(""+randomChange);
+						isChangeCorrectArray[i]=false;
+						break;
+					}
+				}
+
+				randomChange = Math.ceil((correctChangeValue-2+ Math.random()*4)*100)/100;
+				changeValues.add(randomChange);
+				for(int i=0; i<changeButtons.length; i++){
+					if(changeButtons[i].getText().equals("")){
+						changeButtons[i].setText(""+randomChange);
+						isChangeCorrectArray[i]=false;
+						break;
+					}
+				}
+
+
+
+
+			}
+		});      
+		contentPane.add(orderButton);
+
+		changeButtons[0] = new JButton("");
+		changeButtons[0].setBounds(0, 207, 70, 46);
+		changeButtons[0].addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e)
+			{
+				//Execute when button is pressed
+				//Check to see if change is correct
+				orderPrice=0;
+				totalLabel.setText(""+orderPrice);
+				isChangeCorrect=isChangeCorrectArray[0];
+				System.out.println(""+isChangeCorrect);
+				customers.remove(0);
+			}
+		});      
+		contentPane.add(changeButtons[0]);
+
+		changeButtons[1] = new JButton("");
+		changeButtons[1].setBounds(70, 207, 70, 46);
+		changeButtons[1].addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e)
+			{
+				//Execute when button is pressed
+				//Check to see if change is correct
+				orderPrice=0;
+				totalLabel.setText(""+orderPrice);
+				isChangeCorrect=isChangeCorrectArray[1];
+				System.out.println(""+isChangeCorrect);
+				customers.remove(0);
+			}
+		});  
+		contentPane.add(changeButtons[1]);
+
+		changeButtons[2] = new JButton("");
+		changeButtons[2].setBounds(140, 207, 70, 46);
+		changeButtons[2].addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e)
+			{
+				//Execute when button is pressed
+				//Check to see if change is correct
+				orderPrice=0;
+				totalLabel.setText(""+orderPrice);
+				isChangeCorrect=isChangeCorrectArray[2];
+				System.out.println(""+isChangeCorrect);
+				customers.remove(0);
+			}
+		});  
+		contentPane.add(changeButtons[2]);
+
+
+
+		bunType = new JComboBox(buns);
+		bunType.setBounds(332, 11, 92, 20);
+		contentPane.add(bunType);
+
+		pattyType = new JComboBox(patty);
+		pattyType.setBounds(332, 42, 92, 20);
+		contentPane.add(pattyType);
+
+		condimentType = new JComboBox(condiments);
+		condimentType.setBounds(332, 73, 92, 20);
+		contentPane.add(condimentType);
+
+		sizeType = new JComboBox(size);
+		sizeType.setBounds(332, 104, 92, 20);
+		contentPane.add(sizeType);
+
+		flavorType = new JComboBox(flavor);
+		flavorType.setBounds(332, 135, 92, 20);
+		contentPane.add(flavorType);
+
+		//JPanel panel = new JPanel();
+		//panel.setBounds(0, 83, 322, 113);
+		//contentPane.add(panel);
+
+		JLabel customer = new JLabel(new ImageIcon("RegisterCounter.png"));
+		customer.setBounds(0,83,322,113);
+		contentPane.add(customer);
+
+		JLabel lblTheTotalIs = new JLabel("The Total Is:");
+		lblTheTotalIs.setBounds(332, 180, 92, 20);
+		contentPane.add(lblTheTotalIs);
+
+		totalLabel = new JLabel(""+orderPrice);
+		totalLabel.setBounds(332, 210, 92, 40);
+		contentPane.add(totalLabel);
+		
+		JTextArea textArea = new JTextArea(orderText);
+		textArea.setLineWrap(true);
+		textArea.setBounds(0, 0, 322, 82);
+		contentPane.add(textArea);
+
+
+
+	}
+
+	public double getOrderPrice(){
+		bunSelelction = bunType.getSelectedItem().toString();
+		pattySelection = pattyType.getSelectedItem().toString();
+		condimentSelection = condimentType.getSelectedItem().toString();
+		sizeSelection = sizeType.getSelectedItem().toString();
+		flavorSelection = flavorType.getSelectedItem().toString();
+
+		if(pattySelection.equals("Hamburger")){
+			orderPrice=orderPrice+1.50;
+		}
+		if(pattySelection.equals("Turkey")){
+			orderPrice=orderPrice+1.25;
+		}
+		if(pattySelection.equals("Veggie")){
+			orderPrice=orderPrice+1.00;
+		}
+
+		if(sizeSelection.equals("Small")){
+			orderPrice=orderPrice+1.25;
+		}
+
+		if(sizeSelection.equals("Medium")){
+			orderPrice=orderPrice+1.75;
+		}
+
+		if(sizeSelection.equals("Large")){
+			orderPrice=orderPrice+2.25;
+		}
+		System.out.println(""+orderPrice);
+		return orderPrice;
+	}
+
+	public void setOrderText(String s){
+		orderText = s;
+	}
+
+	public void setMoneyUsedToPay(double d){
+		moneyUsedToPay = d;
+	}
+	
+	public void insertCustomer(Customer c){
+		customers.add(c);
+	}
+}
