@@ -1,0 +1,12 @@
+package codeCamp2014;
+
+
+public interface IJob {
+
+	public void Start();
+	public boolean Sync();
+	public boolean SendToHost();
+	
+	
+}
+
