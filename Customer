@@ -1,0 +1,78 @@
+package codeCamp2014;
+
+
+public class Customer {
+
+	public String name;
+	public FoodElement[] foodOrder;
+	public FoodElement[] drinkOrder;
+	public FoodElement[] fullOrder;
+	public String diolague;
+	
+	
+	private Def def = new Def();
+	public double wallet;
+	
+
+	public Customer(){
+
+		name = def._name[(int) (Math.random()*(float)def._buns.length)];
+		foodOrder = CreateFoodOrder();
+		drinkOrder = CreateDrinkOrder();
+		fullOrder = Append(foodOrder,drinkOrder);
+		wallet = CalculatePatronsWallet();
+		diolague = CreatePatronDialogue();
+		
+	}
+	
+	private FoodElement[] CreateFoodOrder(){
+		
+		FoodElement bun = def._buns[(int) (Math.random()*(float)def._buns.length)];
+		FoodElement patty = def._patty[(int) (Math.random()*(float)def._patty.length)];
+		FoodElement condement = def._condement[(int) (Math.random()*(float)def._condement.length)];
+		FoodElement[] array = new FoodElement[]{bun,patty,condement};
+		
+		return array;
+	}
+	private FoodElement[] CreateDrinkOrder(){
+		FoodElement cupSize = def._drinkSize[(int) (Math.random()*(float)def._drinkSize.length)];
+		FoodElement flavor = def._flavor[(int) (Math.random()*(float)def._flavor.length)];
+		FoodElement[] array = new FoodElement[]{cupSize,flavor};
+		return array;
+	}
+	
+	private FoodElement[] Append(FoodElement[] foodArray, FoodElement[] drinkArray){
+		
+		FoodElement[] fullOrder = new FoodElement[foodArray.length + drinkArray.length];
+		
+		for(int i = 0; i < foodArray.length; i++){
+			fullOrder[i] = foodArray[i];
+		}
+		for(int i = 0; i < drinkArray.length; i++){
+			fullOrder[i+foodArray.length] = drinkArray[i];
+		}
+		
+		return fullOrder;
+	}
+	
+	
+public double CalculatePatronsWallet(){
+		
+		double totalCost = 0;
+		for(int i = 0; i<fullOrder.length; i++){
+			totalCost += fullOrder[i].cost;
+		}
+		int extra = ((int) Math.floor(totalCost/5)+1)*5;
+		return extra;	
+	}
+	
+public String CreatePatronDialogue(){
+	
+	String diolague;
+	diolague = "hi my name is "+ name +" and i would like a "+foodOrder[1].foodElement+" burger\n"+ "with "+ foodOrder[2].foodElement+" on a "+foodOrder[0].foodElement+" bun, and for a drink i would like\na "+drinkOrder[0].foodElement+ " "+drinkOrder[1].foodElement+" thank you. here is "+(int)wallet+" dollers";
+	
+	return diolague;
+	
+}
+	
+}
