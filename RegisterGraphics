@@ -1,0 +1,41 @@
+package codeCamp2014;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+public class RegisterGraphics extends JPanel {
+	
+	private BufferedImage registerCounter;
+
+	/**
+	 * Create the panel.
+	 */
+	public RegisterGraphics() {
+		setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panel = new JPanel();
+		add(panel);
+		
+		try {                
+	          registerCounter = ImageIO.read(new File("RegisterCounter.png"));
+	       } catch (Exception e) {
+	            // handle exception...
+	       }
+		
+		
+		
+
+	}
+	
+	  @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.drawImage(registerCounter, 0, 0, null); // see javadoc for more info on the parameters            
+	    }
+
+}
